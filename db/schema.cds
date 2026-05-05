@@ -6,26 +6,25 @@ using {
 } from '@sap/cds/common';
 
 context enums {
-    type UnidadeMedida : String enum {
-        UN = 'UN'; // Unidade
-        KG = 'KG'; // Quilograma
-        G = 'G'; // Grama
-        L = 'L'; // Litro
-        ML = 'ML'; // Mililitro
-        CX = 'CX'; // Caixa
-        PC = 'PC'; // Pacote
+    type UnidadeMedida : String(2) enum {
+        UN; 
+        KG; 
+        G; 
+        L;
+        ML;
+        CX;
+        PC;
     };
 
-    type StatusPedido  : String enum {
-        ABERTO = 'ABERTO';
-        APROVADO = 'APROVADO';
-        FATURADO = 'FATURADO';
-        CANCELADO = 'CANCELADO';
+    type StatusPedido  : String(10) enum {
+        ABERTO;
+        APROVADO;
+        FATURADO;
+        CANCELADO;
     };
 }
 
 context dados_mestres {
-
     entity Material : cuid, managed {
         codigo    : String(40);
         descricao : String(255);
@@ -33,12 +32,16 @@ context dados_mestres {
         precoBase : Decimal(15, 2);
         ativo     : Boolean default true;
     }
-
     entity Funcionario : cuid, managed {
         matricula : String(20);
         nome      : String(120);
         email     : String(120);
         ativo     : Boolean default true;
+    }
+    entity Locais : cuid, managed{
+        local    : String(10);
+        descricao: String(60);
+        ativo    : Boolean default true;
     }
 }
 
@@ -60,12 +63,12 @@ context dados_transacionais {
     entity PedidoItem : managed {
         key pedido     : Association to PedidoHeader;
         key item       : Integer;
-
             material   : Association to dados_mestres.Material;
-
+            local      : Association to dados_mestres.Locais;
             quantidade : Decimal(15, 3);
             precoUnit  : Decimal(15, 2);
             valorItem  : Decimal(15, 2);
+            percDescon : Decimal(3,2);
     }
 }
 
@@ -73,9 +76,21 @@ context estoque {
 
     entity Estoque : managed {
         key material  : Association to dados_mestres.Material;
-        key local     : String(60);
-
+        key local     : Association to dados_mestres.Locais;
             saldo     : Decimal(15, 3) default 0;
-            reservado : Decimal(15, 3) default 0;
     }
+
+view Reservas as
+  select from dados_transacionais.PedidoHeader as header
+    inner join dados_transacionais.PedidoItem as item
+      on item.pedido.ID = header.ID
+  {
+    key item.local.local         as local,
+    key item.material.codigo     as material,
+        sum(item.valorItem)      as valorTotal
+  }
+  where header.status = #APROVADO
+  group by
+    item.local.local,
+    item.material.codigo;
 }
