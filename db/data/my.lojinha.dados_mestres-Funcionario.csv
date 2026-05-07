@@ -1,1 +1,4 @@
 ID,matricula,nome,email,ativo,createdAt,createdBy,modifiedAt,modifiedBy
+790c0b87-6f0a-455e-98a1-59cbebf3b91a,F0001,Ana Silva,ana.silva@lojinha.com,true,2026-05-07T07:07:25Z,system,,
+7c2f273c-7913-4ed9-a663-886656d4eab2,F0002,Bruno Costa,bruno.costa@lojinha.com,true,2026-05-07T07:07:25Z,system,,
+b8074753-624d-4eca-9f13-146c9523539b,F0003,Carla Souza,carla.souza@lojinha.com,true,2026-05-07T07:07:25Z,system,,

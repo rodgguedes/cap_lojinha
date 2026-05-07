@@ -1,0 +1,1 @@
+using DadosMestres as service from '../../srv/cat-service';

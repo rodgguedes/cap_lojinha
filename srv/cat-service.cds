@@ -17,7 +17,6 @@ service DadosTransacionais {
     /** Transacionais */
     entity Pedidos     as projection on dt.PedidoHeader;
 
-    @readonly
     entity ItensPedido as projection on dt.PedidoItem;
 }
 
@@ -27,4 +26,6 @@ service Estoque {
     /** Estoque */
     entity Estoques as projection on es.Estoque;
 
+    @readonly
+    entity Reservas as projection on es.Reservas;
 }

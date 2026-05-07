@@ -84,10 +84,14 @@ view Reservas as
   select from dados_transacionais.PedidoHeader as header
     inner join dados_transacionais.PedidoItem as item
       on item.pedido.ID = header.ID
+    left join dados_mestres.Material as mat
+      on item.material.ID = mat.ID
   {
     key item.local.local         as local,
     key item.material.codigo     as material,
-        sum(item.valorItem)      as valorTotal
+        mat.descricao            as descricaoMaterial,
+        sum(item.quantidade)     as quantidade : Decimal(15,3),
+        mat.unidade              as unidadeMedida
   }
   where header.status = #APROVADO
   group by
