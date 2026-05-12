@@ -37,10 +37,11 @@ module.exports = class DadosMestres extends cds.ApplicationService {
       oData.unidade = String(oData.unidade).trim().toUpperCase()
 
       const aUnidades = _getUnidades()
-      if (!aUnidades.includes(oData.unidade))
-        return req.error(400, cds.i18n.messages.at('INVALID_MATERIAL_UNIT', oData.unidade, aUnidades.join(', ')))
+      if (!aUnidades.includes(oData.unidade)) {
+        return req.error(400, cds.i18n.messages.at('INVALID_MATERIAL_UNIT', [oData.unidade]))
+      }
 
-      oData.codigo    = String(oData.codigo).trim().toUpperCase()
+      oData.codigo = String(oData.codigo).trim().toUpperCase()
       oData.descricao = String(oData.descricao).trim()
 
       if (oData.precoBase !== undefined && oData.precoBase !== null) {
@@ -51,7 +52,7 @@ module.exports = class DadosMestres extends cds.ApplicationService {
 
       const oJaExiste = await SELECT.one.from(Materiais).where({ codigo: oData.codigo })
       if (oJaExiste)
-        return req.error(400, cds.i18n.messages.at('DUPLICATE_MATERIAL_CODE', oData.codigo))
+        return req.error(400, cds.i18n.messages.at('DUPLICATE_MATERIAL_CODE', [oData.codigo]))
     })
 
     // ─────────────────────────────────────────────
@@ -69,7 +70,7 @@ module.exports = class DadosMestres extends cds.ApplicationService {
           .where({ codigo: oData.codigo, ID: { '!=': sId } })
 
         if (oJaExiste)
-          return req.error(400, cds.i18n.messages.at('DUPLICATE_MATERIAL_CODE', oData.codigo))
+          return req.error(400, cds.i18n.messages.at('DUPLICATE_MATERIAL_CODE', [oData.codigo]))
       }
 
       if (oData.descricao !== undefined && oData.descricao !== null) {
@@ -101,10 +102,10 @@ module.exports = class DadosMestres extends cds.ApplicationService {
       const aLogs = aCamposAlterados
         .filter(sCampo => String(oAntes[sCampo] ?? '') !== String(req.data[sCampo] ?? ''))
         .map(sCampo => ({
-          entidade    : 'Material',
-          campo       : sCampo,
-          valorAntigo : String(oAntes[sCampo] ?? ''),
-          valorNovo   : String(req.data[sCampo] ?? '')
+          entidade: 'Material',
+          campo: sCampo,
+          valorAntigo: String(oAntes[sCampo] ?? ''),
+          valorNovo: String(req.data[sCampo] ?? '')
         }))
 
       if (!aLogs.length) return
