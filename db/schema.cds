@@ -73,7 +73,6 @@ context dados_transacionais {
 }
 
 context estoque {
-
     entity Estoque : managed {
         key material  : Association to dados_mestres.Material;
         key local     : Association to dados_mestres.Locais;
@@ -96,5 +95,18 @@ view Reservas as
   where header.status = #APROVADO
   group by
     item.local.local,
-    item.material.codigo;
+    item.material.codigo,
+    mat.descricao,       
+    mat.unidade;      
+}
+
+context utilitarios {
+    
+    entity Log : cuid, managed {
+        entidade: String;
+        campo: String;
+        valorAntigo: String;
+        valorNovo: String;
+    }
+
 }

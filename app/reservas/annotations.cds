@@ -1,1 +1,1 @@
-using DadosMestres as service from '../../srv/cat-service';
+using DadosMestres as service from '../../srv/dadosMestres';
