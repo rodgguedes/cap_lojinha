@@ -1,0 +1,52 @@
+@server=http://localhost:4004
+@username=alice
+@password=
+
+
+### Estoques
+# @name Estoques_GET
+GET {{server}}/odata/v4/Estoque/Estoques
+Authorization: Basic {{username}}:{{password}}
+
+
+### Estoques
+# @name Estoques_POST
+POST {{server}}/odata/v4/Estoque/Estoques
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "saldo": 237591820534.953,
+  "createdAt": "2005-03-13T00:00:00.000Z",
+  "createdBy": "createdBy.bhklo@example.net",
+  "modifiedAt": "2021-05-18T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.bhklo@example.com"
+}
+
+
+### Estoques
+# @name Estoques_PATCH
+PATCH {{server}}/odata/v4/Estoque/Estoques(material=undefined,local=undefined)
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "saldo": 237591820534.953,
+  "createdAt": "2005-03-13T00:00:00.000Z",
+  "createdBy": "createdBy.bhklo@example.net",
+  "modifiedAt": "2021-05-18T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.bhklo@example.com"
+}
+
+
+### Estoques
+# @name Estoques_DELETE
+DELETE {{server}}/odata/v4/Estoque/Estoques(material=undefined,local=undefined)
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### Reservas
+# @name Reservas_GET
+GET {{server}}/odata/v4/Estoque/Reservas
+Authorization: Basic {{username}}:{{password}}

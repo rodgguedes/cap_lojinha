@@ -1,0 +1,165 @@
+@server=http://localhost:4004
+@username=alice
+@password=
+
+
+### Pedidos
+# @name Pedidos_GET
+GET {{server}}/odata/v4/DadosTransacionais/Pedidos
+Authorization: Basic {{username}}:{{password}}
+
+
+### Pedidos
+# @name Pedidos_POST
+POST {{server}}/odata/v4/DadosTransacionais/Pedidos
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "11471634-1b06-489e-afd2-c29f413f1f1a",
+  "numero": "numero-11471",
+  "dataPedido": "2005-10-24",
+  "status": "CANCELADO",
+  "itens": [
+    {
+      "item": 18019854,
+      "quantidade": 551038860921.959,
+      "precoUnit": 9783826393432.09,
+      "valorItem": 4124991361288.35,
+      "percDescon": 4.24,
+      "createdAt": "2003-12-30T00:00:00.000Z",
+      "createdBy": "createdBy.aq87i@example.org",
+      "modifiedAt": "2016-10-23T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.aq87i@example.com"
+    },
+    {
+      "item": 18019855,
+      "quantidade": 608741457116.378,
+      "precoUnit": 8688175306490.98,
+      "valorItem": 9218479843572,
+      "percDescon": 0.72,
+      "createdAt": "2012-06-26T00:00:00.000Z",
+      "createdBy": "createdBy.aq87j@example.net",
+      "modifiedAt": "2015-05-02T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.aq87j@example.org"
+    }
+  ],
+  "totalBruto": 586928537431.11,
+  "createdAt": "2014-07-31T00:00:00.000Z",
+  "createdBy": "createdBy.8un@example.net",
+  "modifiedAt": "2003-06-08T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.8un@example.org"
+}
+
+
+### Pedidos
+# @name Pedidos_PATCH
+PATCH {{server}}/odata/v4/DadosTransacionais/Pedidos/11471634-1b06-489e-afd2-c29f413f1f1a
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "11471634-1b06-489e-afd2-c29f413f1f1a",
+  "numero": "numero-11471",
+  "dataPedido": "2005-10-24",
+  "status": "CANCELADO",
+  "itens": [
+    {
+      "item": 18019854,
+      "quantidade": 551038860921.959,
+      "precoUnit": 9783826393432.09,
+      "valorItem": 4124991361288.35,
+      "percDescon": 4.24,
+      "createdAt": "2003-12-30T00:00:00.000Z",
+      "createdBy": "createdBy.aq87i@example.org",
+      "modifiedAt": "2016-10-23T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.aq87i@example.com"
+    },
+    {
+      "item": 18019855,
+      "quantidade": 608741457116.378,
+      "precoUnit": 8688175306490.98,
+      "valorItem": 9218479843572,
+      "percDescon": 0.72,
+      "createdAt": "2012-06-26T00:00:00.000Z",
+      "createdBy": "createdBy.aq87j@example.net",
+      "modifiedAt": "2015-05-02T00:00:00.000Z",
+      "modifiedBy": "modifiedBy.aq87j@example.org"
+    }
+  ],
+  "totalBruto": 586928537431.11,
+  "createdAt": "2014-07-31T00:00:00.000Z",
+  "createdBy": "createdBy.8un@example.net",
+  "modifiedAt": "2003-06-08T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.8un@example.org"
+}
+
+
+### Pedidos
+# @name Pedidos_DELETE
+DELETE {{server}}/odata/v4/DadosTransacionais/Pedidos/11471634-1b06-489e-afd2-c29f413f1f1a
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### ItensPedido
+# @name ItensPedido_GET
+GET {{server}}/odata/v4/DadosTransacionais/ItensPedido
+Authorization: Basic {{username}}:{{password}}
+
+
+### ItensPedido
+# @name ItensPedido_POST
+POST {{server}}/odata/v4/DadosTransacionais/ItensPedido
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "item": 18019854,
+  "quantidade": 551038860921.959,
+  "precoUnit": 9783826393432.09,
+  "valorItem": 4124991361288.35,
+  "percDescon": 4.24,
+  "createdAt": "2003-12-30T00:00:00.000Z",
+  "createdBy": "createdBy.aq87i@example.org",
+  "modifiedAt": "2016-10-23T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.aq87i@example.com"
+}
+
+
+### ItensPedido
+# @name ItensPedido_PATCH
+PATCH {{server}}/odata/v4/DadosTransacionais/ItensPedido(pedido=[object Object],item=18019854)
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "item": 18019854,
+  "quantidade": 551038860921.959,
+  "precoUnit": 9783826393432.09,
+  "valorItem": 4124991361288.35,
+  "percDescon": 4.24,
+  "createdAt": "2003-12-30T00:00:00.000Z",
+  "createdBy": "createdBy.aq87i@example.org",
+  "modifiedAt": "2016-10-23T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.aq87i@example.com"
+}
+
+
+### ItensPedido
+# @name ItensPedido_DELETE
+DELETE {{server}}/odata/v4/DadosTransacionais/ItensPedido(pedido=[object Object],item=18019854)
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### confirmarPedido
+# @name confirmarPedido_POST
+POST {{server}}/odata/v4/DadosTransacionais/confirmarPedido
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "pedidoId": "20816669-5731-44f9-9b88-87b4dfd6e6ab",
+  "funcionarioId": "20816669-2f73-4883-a121-8ff86de705b3"
+}

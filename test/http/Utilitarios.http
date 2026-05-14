@@ -1,0 +1,9 @@
+@server=http://localhost:4004
+@username=alice
+@password=
+
+
+### Log
+# @name Log_GET
+GET {{server}}/odata/v4/Utilitarios/Log
+Authorization: Basic {{username}}:{{password}}

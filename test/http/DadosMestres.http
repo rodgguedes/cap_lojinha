@@ -1,0 +1,107 @@
+@server=http://localhost:4004
+@username=alice
+@password=
+
+
+### Materiais
+# @name Materiais_GET
+GET {{server}}/odata/v4/DadosMestres/Materiais
+Authorization: Basic {{username}}:{{password}}
+
+
+### Materiais
+# @name Materiais_POST
+POST {{server}}/odata/v4/DadosMestres/Materiais
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "10033042-98d2-4971-a90e-ed742ec5af84",
+  "codigo": "codigo-10033042",
+  "descricao": "descricao-10033042",
+  "unidade": "PC",
+  "precoBase": 5501480823067.86,
+  "ativo": true,
+  "createdAt": "2016-01-23T00:00:00.000Z",
+  "createdBy": "createdBy.5z1jm@example.net",
+  "modifiedAt": "2016-10-07T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.5z1jm@example.net"
+}
+
+
+### Materiais
+# @name Materiais_PATCH
+PATCH {{server}}/odata/v4/DadosMestres/Materiais/10033042-98d2-4971-a90e-ed742ec5af84
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "10033042-98d2-4971-a90e-ed742ec5af84",
+  "codigo": "codigo-10033042",
+  "descricao": "descricao-10033042",
+  "unidade": "PC",
+  "precoBase": 5501480823067.86,
+  "ativo": true,
+  "createdAt": "2016-01-23T00:00:00.000Z",
+  "createdBy": "createdBy.5z1jm@example.net",
+  "modifiedAt": "2016-10-07T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.5z1jm@example.net"
+}
+
+
+### Materiais
+# @name Materiais_DELETE
+DELETE {{server}}/odata/v4/DadosMestres/Materiais/10033042-98d2-4971-a90e-ed742ec5af84
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+
+### Funcionarios
+# @name Funcionarios_GET
+GET {{server}}/odata/v4/DadosMestres/Funcionarios
+Authorization: Basic {{username}}:{{password}}
+
+
+### Funcionarios
+# @name Funcionarios_POST
+POST {{server}}/odata/v4/DadosMestres/Funcionarios
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "10318191-c093-48cb-8cd7-02b484b31b35",
+  "matricula": "matricula-10318191",
+  "nome": "nome-10318191",
+  "email": "email-10318191",
+  "ativo": false,
+  "createdAt": "2023-04-20T00:00:00.000Z",
+  "createdBy": "createdBy.655kf@example.com",
+  "modifiedAt": "2000-05-09T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.655kf@example.net"
+}
+
+
+### Funcionarios
+# @name Funcionarios_PATCH
+PATCH {{server}}/odata/v4/DadosMestres/Funcionarios/10318191-c093-48cb-8cd7-02b484b31b35
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}
+
+{
+  "ID": "10318191-c093-48cb-8cd7-02b484b31b35",
+  "matricula": "matricula-10318191",
+  "nome": "nome-10318191",
+  "email": "email-10318191",
+  "ativo": false,
+  "createdAt": "2023-04-20T00:00:00.000Z",
+  "createdBy": "createdBy.655kf@example.com",
+  "modifiedAt": "2000-05-09T00:00:00.000Z",
+  "modifiedBy": "modifiedBy.655kf@example.net"
+}
+
+
+### Funcionarios
+# @name Funcionarios_DELETE
+DELETE {{server}}/odata/v4/DadosMestres/Funcionarios/10318191-c093-48cb-8cd7-02b484b31b35
+Content-Type: application/json
+Authorization: Basic {{username}}:{{password}}

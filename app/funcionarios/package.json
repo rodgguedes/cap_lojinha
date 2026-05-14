@@ -1,7 +1,7 @@
 {
-  "name": "reservas",
+  "name": "funcionarios",
   "version": "0.0.1",
-  "description": "Reservas de estoque",
+  "description": "An SAP Fiori application.",
   "keywords": [
     "ui5",
     "openui5",

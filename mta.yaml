@@ -2,6 +2,18 @@ _schema-version: 3.3.0
 ID: Lojinha
 description: A simple CAP project.
 version: 1.0.0
+
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+
+build-parameters:
+  before-all:
+    - builder: custom
+      commands:
+        - npm ci
+        - npx cds build --production
+
 modules:
   - name: Lojinha-srv
     type: nodejs
@@ -18,6 +30,7 @@ modules:
       instances: 1
     build-parameters:
       builder: npm-ci
+
   - name: Lojinha-db-deployer
     type: hdb
     path: gen/db
@@ -25,6 +38,7 @@ modules:
       - name: Lojinha-db
     parameters:
       buildpack: nodejs_buildpack
+
   - name: Lojinha
     type: approuter.nodejs
     path: app/router
@@ -42,6 +56,7 @@ modules:
           forwardAuthToken: false
           name: ui5
           url: https://ui5.sap.com
+      - name: Lojinha-html5-runtime
     provides:
       - name: app-api
         properties:
@@ -51,6 +66,8 @@ modules:
       disk-quota: 256M
       keep-existing-routes: true
       memory: 256M
+
+  # Este é o "deployer" correto para HTML5 apps no HTML5 Application Repository (repo host).
   - name: Lojinha-app-content
     type: com.sap.application.content
     path: .
@@ -61,10 +78,19 @@ modules:
     build-parameters:
       build-result: resources
       requires:
-        - artifacts:
+        - name: reservas
+          artifacts:
             - reservas.zip
-          name: reservas
           target-path: resources/
+        - name: sapfedemomateriais
+          artifacts:
+            - sapfedemomateriais.zip
+          target-path: resources/
+        - name: sapfedemofuncionariosfuncionarios
+          artifacts:
+            - sapfedemofuncionariosfuncionarios.zip
+          target-path: resources/
+
   - name: reservas
     type: html5
     path: app/reservas
@@ -72,63 +98,87 @@ modules:
       build-result: dist
       builder: custom
       commands:
-        - npm install
+        - npm ci
         - npm run build:cf
-      supported-platforms:
-        []
+      supported-platforms: []
+
+  - name: sapfedemomateriais
+    type: html5
+    path: app/materiais
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build:cf
+      supported-platforms: []
+
+  - name: sapfedemofuncionariosfuncionarios
+    type: html5
+    path: app/funcionarios
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm ci
+        - npm run build:cf
+      supported-platforms: []
+
 resources:
   - name: Lojinha-auth
     type: org.cloudfoundry.managed-service
     parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
       config:
+        xsappname: Lojinha-${org}-${space}
+        tenant-mode: dedicated
         oauth2-configuration:
           credential-types:
             - binding-secret
             - x509
           redirect-uris:
             - https://*~{app-api/app-uri}/**
-        tenant-mode: dedicated
-        xsappname: Lojinha-${org}-${space}
-      path: ./xs-security.json
-      service: xsuaa
-      service-plan: application
     requires:
       - name: app-api
+
   - name: Lojinha-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
       service-plan: hdi-shared
+
+  # Repo Host (onde o app-content faz upload dos zips)
   - name: Lojinha-repo-host
     type: org.cloudfoundry.managed-service
     parameters:
       service: html5-apps-repo
-      service-name: Lojinha-html5-service
       service-plan: app-host
+      service-name: Lojinha-html5-service
+
   - name: Lojinha-destination-service
     type: org.cloudfoundry.managed-service
     parameters:
+      service: destination
+      service-plan: lite
+      service-name: Lojinha-destination-service
       config:
         HTML5Runtime_enabled: false
         init_data:
           instance:
-            destinations:
-              - Authentication: NoAuthentication
-                Name: ui5
-                ProxyType: Internet
-                Type: HTTP
-                URL: https://ui5.sap.com
             existing_destinations_policy: update
+            destinations:
+              - Name: ui5
+                Type: HTTP
+                ProxyType: Internet
+                Authentication: NoAuthentication
+                URL: https://ui5.sap.com
         version: 1.0.0
-      service: destination
-      service-name: Lojinha-destination-service
-      service-plan: lite
-parameters:
-  deploy_mode: html5-repo
-  enable-parallel-deployments: true
-build-parameters:
-  before-all:
-    - builder: custom
-      commands:
-        - npm ci
-        - npx cds build --production
+
+  # Runtime (consumo das apps do repo em runtime; usado pelo approuter)
+  - name: Lojinha-html5-runtime
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-plan: app-runtime
